@@ -1,0 +1,93 @@
+/*
+Michael Iberkleid
+ July 2013
+ Code for project irrigation system
+ */
+const int redLED = 6;
+const int yellowLED = 5;
+const int greenLED = 4;
+const int blueLED = 3;
+const int watering = 7;
+int moistureSensor = A1;
+int moisture;
+int moisturesense;
+
+void setup() {
+  Serial.begin(9600); //Initialize the serial w/ baud rate of 9600
+  pinMode(redLED, OUTPUT);
+  pinMode(yellowLED, OUTPUT);
+  pinMode(greenLED, OUTPUT);
+  pinMode(blueLED, OUTPUT);
+  pinMode(watering, OUTPUT);
+
+
+  //test LED's one by one
+  digitalWrite(redLED, HIGH);
+  delay(200);
+  digitalWrite(redLED, LOW);
+  digitalWrite(yellowLED, HIGH);
+  delay(200);
+  digitalWrite(yellowLED, LOW);
+  digitalWrite(greenLED, HIGH);
+  delay(200);
+  digitalWrite(greenLED, LOW);
+  digitalWrite(blueLED,HIGH);
+  delay(200);
+  digitalWrite(blueLED, LOW);
+  digitalWrite(watering, HIGH);
+  delay(200);
+  digitalWrite(watering, LOW);
+}
+
+void loop (){
+  moisturesense = analogRead(moistureSensor);
+  moisture = map(moisturesense, 0, 1000, 0, 100);
+
+
+
+  if (moisture > 75){
+    Serial.println(moisturesense);
+    Serial.println(moisture);
+    digitalWrite(redLED, LOW);
+    digitalWrite(yellowLED, LOW);
+    digitalWrite(greenLED, LOW);
+    digitalWrite(blueLED, HIGH);
+    delay(200);
+  }
+  else if (moisture > 50 && moisture<75){
+    Serial.println(moisturesense);
+    Serial.println(moisture);
+     digitalWrite(redLED, LOW);
+    digitalWrite(yellowLED, LOW);
+    digitalWrite(greenLED, HIGH);
+    digitalWrite(blueLED, LOW);
+    delay(200);
+  }
+
+  else if (moisture > 25 && moisture<50){
+    Serial.println(moisturesense);
+    Serial.println(moisture);
+     digitalWrite(redLED, LOW);
+    digitalWrite(yellowLED, HIGH);
+    digitalWrite(greenLED, LOW);
+    digitalWrite(blueLED, LOW);
+    digitalWrite(watering,HIGH);
+    delay(2000);
+    digitalWrite(watering,LOW); 
+  }
+  else if(moisture < 25){
+    Serial.println(moisturesense);
+    Serial.println(moisture);
+     digitalWrite(redLED,HIGH);
+    digitalWrite(yellowLED, LOW);
+    digitalWrite(greenLED, LOW);
+    digitalWrite(blueLED, LOW);
+    digitalWrite(watering,HIGH);
+    delay(2000);
+    digitalWrite(watering,LOW); 
+  }
+}
+
+
+
+
